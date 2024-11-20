@@ -1,14 +1,19 @@
-package helha.be.mongojdbc.Modele;
+package helha.be.mongojdbc.models;
 
-import com.mongodb.MongoCredential;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.*;
 import com.mongodb.client.result.InsertOneResult;
 import org.bson.Document;
 import org.bson.types.ObjectId;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+@RestController
+@RequestMapping("/api/mongo")
 public class ConnectToMongoDB {
 
+    @PostMapping("/connect")
     public static void main(String[] args) {
         String uri = "mongodb://localhost:27017";
         try {
