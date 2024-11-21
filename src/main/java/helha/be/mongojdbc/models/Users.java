@@ -11,8 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "users")
 public class Users {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private String id;
     private String username;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;

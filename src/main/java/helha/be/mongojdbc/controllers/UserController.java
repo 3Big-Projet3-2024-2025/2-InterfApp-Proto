@@ -4,11 +4,12 @@ import helha.be.mongojdbc.models.Users;
 import helha.be.mongojdbc.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
+@RequestMapping("/api/mongo")
 public class UserController {
 
     @Autowired
@@ -22,5 +23,10 @@ public class UserController {
         users.setPassword(passwordEncoder.encode(users.getPassword()));
         this.userRepo.save(users);
         return users;
+    }
+
+    @GetMapping("/user")
+    public List<Users> getUsers() {
+        return userRepo.findAll();
     }
 }

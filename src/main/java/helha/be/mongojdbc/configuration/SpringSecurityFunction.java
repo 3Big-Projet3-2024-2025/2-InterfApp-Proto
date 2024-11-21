@@ -31,9 +31,7 @@ public class SpringSecurityFunction {
     public SecurityFilterChain securityFilterChain(final HttpSecurity http) throws Exception {
         return http.csrf(csrf -> csrf.disable())
                 .authorizeRequests(authorizeRequests -> {
-                    authorizeRequests.requestMatchers("/sports/all").hasRole("ADMIN");
-                    authorizeRequests.requestMatchers("/sports").hasRole("USER");
-                    authorizeRequests.requestMatchers("/swagger-ui/**","/v3/api-docs","/user","/auth/login").permitAll();
+                    authorizeRequests.requestMatchers("/api/mongo/user","/auth/login").permitAll();
                     authorizeRequests.anyRequest().authenticated();
                 }).addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class).build();
     }
