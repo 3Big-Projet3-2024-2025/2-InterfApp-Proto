@@ -1,0 +1,35 @@
+<!-- question-form.component.html -->
+<div class="question-container">
+    <div class="header">
+      <h3>Question 1</h3>
+      <button class="close-btn" (click)="removeQuestion()">&times;</button>
+    </div>
+  
+    <form [formGroup]="formQuestion" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="questionType">Type de question :</label>
+      <select id="inputTypeQuestion" name="inputTypeQuestion"
+      aria-label="Choose the question type" required=required formControlName="inputTypeQuestion"
+      (change)="onTypeChange()">
+        <option *ngFor="let type of questionTypes" [value]="type"></option>
+      </select>
+    </div>
+  
+    <div class="form-group">
+      <label for="questionText">Question :</label>
+      <input id="inputQuestion" type="text" formControlName="inputQuestion" placeholder="Question" required="required" />
+    </div>
+  
+    <div formArrayName="inputChoices" *ngFor="let choice of choices; let i = index" class="form-group">
+      <label [for]="'choice' + i">Choix {{ i + 1 }} :</label>
+      <div class="choice-wrapper">
+        <input [id]="'inputChoice' + i" type="text" [formControlName]="i" placeholder="Choix" [name]="'inputChoice' + i" />
+        <button class="delete-btn" (click)="removeChoice(i)">&times;</button>
+      </div>
+    </div>
+
+    </form>
+  
+    <button class="add-choice-btn" (click)="addChoice()">+</button>
+  </div>
+  

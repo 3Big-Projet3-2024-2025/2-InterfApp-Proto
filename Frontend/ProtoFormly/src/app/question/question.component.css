@@ -1,0 +1,82 @@
+/* question-form.component.css */
+
+.question-container {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 16px;
+    background-color: #f9f9f9;
+    width: 400px;
+    margin: 16px auto;
+    position: relative;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  
+  .header h3 {
+    margin: 0;
+    font-size: 18px;
+  }
+  
+  .close-btn {
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: #666;
+    cursor: pointer;
+  }
+  
+  .form-group {
+    margin-bottom: 16px;
+  }
+  
+  label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 4px;
+  }
+  
+  input[type="text"], select {
+    width: calc(100% - 32px);
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  .choice-wrapper {
+    display: flex;
+    align-items: center;
+  }
+  
+  .choice-wrapper input {
+    flex: 1;
+  }
+  
+  .delete-btn {
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: #d9534f;
+    cursor: pointer;
+    margin-left: 8px;
+  }
+  
+  .add-choice-btn {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .add-choice-btn:hover {
+    background-color: #0056b3;
+  }
+  
