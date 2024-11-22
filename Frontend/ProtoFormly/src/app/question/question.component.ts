@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, Validators,  ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, Validators,  ReactiveFormsModule, FormArray } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -11,8 +11,8 @@ import { CommonModule } from '@angular/common';
 })
 export class QuestionComponent {
   formQuestion: FormGroup;
-  questionTypes: string[] = ['Multiple choice', 'Open Question'];
-  choices: string[] = ['Choice 1', 'Choice 2'];
+  questionTypes: string[] = ['Multiple Choice', 'Open Answer', 'Rating'];
+  choices: string[] = [];
 
   constructor(private formBuilder: FormBuilder){
     this.formQuestion = this.formBuilder.group({
@@ -22,12 +22,18 @@ export class QuestionComponent {
     })
   }
 
+  get inputChoicesArray(){
+    return (this.formQuestion.get('inputChoices') as FormArray);
+  }
+
   addChoice(): void {
-    this.choices.push("Choice" + this.choices.length);
+    this.choices.push("");
+    this.inputChoicesArray.push(this.formBuilder.control('', Validators.required))
   }
 
   removeChoice(index: number): void {
     if (this.choices.length > 1) {
+      this.inputChoicesArray.removeAt(index);
       this.choices.splice(index, 1);
     }
   }
