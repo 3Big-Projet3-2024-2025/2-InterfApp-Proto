@@ -1,1 +1,14 @@
-<p>create-form works!</p>
+<div class="createForm-container">
+    <div *ngFor="let questionId of questions; let i = index">
+      <app-question
+        [questionId]="questionId"
+        (remove)="removeQuestion(i)"
+        (formEmitter)="saveForm($event)">
+      </app-question>
+    </div>
+  
+    <div class="actions">
+      <button class="add-btn" (click)="addQuestion()">+</button>
+      <button class="save-btn" (click)="saveQuestions()">Enregistrer</button>
+    </div>
+  </div>

@@ -1,23 +1,28 @@
 <!-- question-form.component.html -->
 <div class="question-container">
     <div class="header">
-      <h3>Question 1</h3>
+      <h3>Question {{questionId }}</h3>
       <button class="close-btn" (click)="removeQuestion()">&times;</button>
     </div>
   
-    <form [formGroup]="formQuestion" (ngSubmit)="onSubmit()">
+    <form [formGroup]="formQuestion" >
     <div class="form-group">
-      <label for="questionType">Type de question :</label>
+      <label for="inputTypeQuestion">Type de question :</label>
       <select id="inputTypeQuestion" name="inputTypeQuestion"
       aria-label="Choose the question type" required=required formControlName="inputTypeQuestion"
-      (change)="onTypeChange()">
+      (change)="onTypeChange(formQuestion.value.inputTypeQuestion)">
         <option *ngFor="let type of questionTypes" [value]="type">{{ type }}</option>
       </select>
     </div>
   
     <div class="form-group">
-      <label for="questionText">Question :</label>
+      <label for="inputQuestion">Question :</label>
       <input id="inputQuestion" type="text" formControlName="inputQuestion" placeholder="Question" required="required" />
+    </div>
+
+    <div *ngIf="formQuestion.value.inputTypeQuestion === 'Multiple Choice'" style="display: flex; align-items: center;height: 40px;">
+      <input id="inputAnswerMultiple" type="checkbox" formControlName="inputAnswerMultiple"/>
+      <label for="inputAnswerMultiple" > Multiple answer possible </label>
     </div>
   
     <div *ngIf="formQuestion.value.inputTypeQuestion === 'Multiple Choice'">

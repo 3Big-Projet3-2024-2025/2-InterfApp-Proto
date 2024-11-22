@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, Validators,  ReactiveFormsModule, FormArray } from '@angular/forms';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormBuilder, FormGroup, FormsModule, Validators,  ReactiveFormsModule, FormArray, FormControl } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -10,15 +10,19 @@ import { CommonModule } from '@angular/common';
   styleUrl: './question.component.css'
 })
 export class QuestionComponent {
+  @Input() questionId!: number; // Reçoit un identifiant de question depuis le parent
+  @Output() remove = new EventEmitter<void>(); // Émet un événement pour supprimer la question
+  @Output() formEmitter = new EventEmitter<FormGroup>();
   formQuestion: FormGroup;
   questionTypes: string[] = ['Multiple Choice', 'Open Answer', 'Rating'];
-  choices: string[] = [];
+  choices: string[] = [""];
+  InputChoicesArray : FormArray = this.formBuilder.array(this.choices.map(choice => this.formBuilder.control(choice)));
+  AnswerMultiple : FormControl = new FormControl(false);
 
   constructor(private formBuilder: FormBuilder){
     this.formQuestion = this.formBuilder.group({
       inputQuestion:['', Validators.required],
       inputTypeQuestion: ['', Validators.required],
-      inputChoices: this.formBuilder.array(this.choices.map(choice => this.formBuilder.control(choice)))
     })
   }
 
@@ -28,26 +32,33 @@ export class QuestionComponent {
 
   addChoice(): void {
     this.choices.push("");
-    this.inputChoicesArray.push(this.formBuilder.control('', Validators.required))
+    this.inputChoicesArray.push(this.formBuilder.control('', Validators.required));
   }
 
   removeChoice(index: number): void {
     if (this.choices.length > 1) {
-      this.inputChoicesArray.removeAt(index);
       this.choices.splice(index, 1);
+      this.inputChoicesArray.removeAt(index);
     }
   }
 
   removeQuestion(): void {
-    // Logic to remove the question (could emit an event to parent component)
-    console.log('Question removed');
+    this.remove.emit();
   }
 
-  onTypeChange():void{
-
+  onTypeChange(typeQuestion : string):void{
+    if (typeQuestion == "Multiple Choice"){
+      this.formQuestion.addControl('inputChoices', this.InputChoicesArray);
+      this.formQuestion.addControl('inputAnswerMultiple', this.AnswerMultiple);
+    }
+    if (typeQuestion == "Open Answer" || typeQuestion == "Rating"){
+      this.formQuestion.removeControl("inputChoices");
+      this.formQuestion.removeControl("inputAnswerMultiple");
+    }
   }
 
-  onSubmit():void{
-
+  emitFormGroup(): void {
+    this.formEmitter.emit(this.formQuestion);
   }
+
 }
