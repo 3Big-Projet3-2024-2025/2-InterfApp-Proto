@@ -1,44 +1,54 @@
 <!-- question-form.component.html -->
-<div class="question-container">
-    <div class="header">
-      <h3>Question {{questionId }}</h3>
+<div class="question-container" style="position: relative;">
+  <div class="header" style="display: flex; justify-content: space-between; align-items: center;">
+    <div>
+      <label for="intiluler">Intiluler :</label>
+      <input id="intituler" type="text" placeholder="Question {{questionId}}" />
+    </div>
+    <div style="display: flex; gap: 5px;">
+      <button class="toggle-btn" (click)="toggleContent()">{{ isContentHidden ? '&#9650;' : '&#9660;' }}</button>
       <button class="close-btn" (click)="removeQuestion()">&times;</button>
     </div>
-  
-    <form [formGroup]="formQuestion" >
-    <div class="form-group">
-      <label for="inputTypeQuestion">Type de question :</label>
-      <select id="inputTypeQuestion" name="inputTypeQuestion"
-      aria-label="Choose the question type" required=required formControlName="inputTypeQuestion"
-      (change)="onTypeChange(formQuestion.value.inputTypeQuestion)">
-        <option *ngFor="let type of questionTypes" [value]="type">{{ type }}</option>
-      </select>
-    </div>
-  
-    <div class="form-group">
-      <label for="inputQuestion">Question :</label>
-      <input id="inputQuestion" type="text" formControlName="inputQuestion" placeholder="Question" required="required" />
-    </div>
+  </div>
 
-    <div *ngIf="formQuestion.value.inputTypeQuestion === 'Multiple Choice'" style="display: flex; align-items: center;height: 40px;">
-      <input id="inputAnswerMultiple" type="checkbox" formControlName="inputAnswerMultiple"/>
-      <label for="inputAnswerMultiple" > Multiple answer possible </label>
-    </div>
-  
-    <div *ngIf="formQuestion.value.inputTypeQuestion === 'Multiple Choice'">
-      <div  formArrayName="inputChoices" *ngFor="let choice of inputChoicesArray.controls; let i = index" class="form-group">
-        <label [for]="'choice' + i">Choix {{ i + 1 }} :</label>
-        <div class="choice-wrapper">
-          <input [id]="'inputChoice' + i" type="text" [formControlName]="i" placeholder="Choix" [name]="'inputChoice' + i" />
-          <button class="delete-btn" (click)="removeChoice(i)">&times;</button>
-        </div>
+  <div class="content" [ngClass]="{ 'hidden': isContentHidden }">
+    <form [formGroup]="formQuestion" >
+      <div class="form-group">
+        <label for="inputTypeQuestion">Type de question :</label>
+        <select id="inputTypeQuestion" name="inputTypeQuestion"
+        aria-label="Choose the question type" required=required formControlName="inputTypeQuestion"
+        (change)="onTypeChange(formQuestion.value.inputTypeQuestion)">
+          <option *ngFor="let type of questionTypes" [value]="type">{{ type }}</option>
+        </select>
       </div>
-      <button class="add-choice-btn" (click)="addChoice()">+</button>
-    </div>
-    
+
+      <div class="form-group">
+        <label for="inputQuestion">Question :</label>
+        <input id="inputQuestion" type="text" formControlName="inputQuestion" placeholder="Question" required="required" />
+      </div>
+
+      <div *ngIf="formQuestion.value.inputTypeQuestion === 'Multiple Choice'" style="display: flex; align-items: center;height: 40px;">
+        <input id="inputAnswerMultiple" type="checkbox" formControlName="inputAnswerMultiple"/>
+        <label for="inputAnswerMultiple" > Multiple answer possible </label>
+      </div>
+
+      <div *ngIf="formQuestion.value.inputTypeQuestion === 'Multiple Choice'">
+        <div  formArrayName="inputChoices" *ngFor="let choice of inputChoicesArray.controls; let i = index" class="form-group">
+          <label [for]="'choice' + i">Choix {{ i + 1 }} :</label>
+          <div class="choice-wrapper">
+            <input [id]="'inputChoice' + i" type="text" [formControlName]="i" placeholder="Choix" [name]="'inputChoice' + i" />
+            <button class="delete-btn" (click)="removeChoice(i)">&times;</button>
+          </div>
+        </div>
+        <button class="add-choice-btn" (click)="addChoice()">+</button>
+      </div>
 
     </form>
-  
-    
   </div>
+
+  <div class="move-buttons" style="position: absolute; top: 50%; right: -50px; transform: translateY(-50%); display: flex; flex-direction: column; gap: 5px;">
+    <button class="move-up-btn" (click)="moveUp()">&#8593;</button>
+    <button class="move-down-btn" (click)="moveDown()">&#8595;</button>
+  </div>
+</div>
   

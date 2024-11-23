@@ -13,9 +13,11 @@ export class QuestionComponent {
   @Input() questionId!: number; // Reçoit un identifiant de question depuis le parent
   @Output() remove = new EventEmitter<void>(); // Émet un événement pour supprimer la question
   @Output() formEmitter = new EventEmitter<FormGroup>();
+  @Output() moveEmitter = new EventEmitter<boolean>();
   formQuestion: FormGroup;
+  isContentHidden : boolean = false;
   questionTypes: string[] = ['Multiple Choice', 'Open Answer', 'Rating'];
-  choices: string[] = [""];
+  choices: string[] = ["",""];
   InputChoicesArray : FormArray = this.formBuilder.array(this.choices.map(choice => this.formBuilder.control(choice)));
   AnswerMultiple : FormControl = new FormControl(false);
 
@@ -59,6 +61,18 @@ export class QuestionComponent {
 
   emitFormGroup(): void {
     this.formEmitter.emit(this.formQuestion);
+  }
+
+  moveUp(){
+    this.moveEmitter.emit(true);
+  }
+
+  moveDown(){
+    this.moveEmitter.emit(false);
+  }
+
+  toggleContent(){
+    this.isContentHidden = this.isContentHidden ? false : true ;
   }
 
 }

@@ -1,14 +1,26 @@
 <div class="createForm-container">
-    <div *ngFor="let questionId of questions; let i = index">
-      <app-question
-        [questionId]="questionId"
-        (remove)="removeQuestion(i)"
-        (formEmitter)="saveForm($event)">
-      </app-question>
+  <form [formGroup]="formForm" >
+    <div class="form-header">
+      <label for="inputTitreForm">Titre du formulaire :</label>
+      <input id="inputTitreForm" type="text"  formControlName="inputTitreForm" placeholder="Entrez le titre du formulaire">
     </div>
-  
-    <div class="actions">
-      <button class="add-btn" (click)="addQuestion()">+</button>
-      <button class="save-btn" (click)="saveQuestions()">Enregistrer</button>
-    </div>
+  </form> 
+
+  <div *ngFor="let questionId of questions; let i = index">
+    <app-question
+      [questionId]="i + 1"
+      (remove)="removeQuestion(i)"
+      (formEmitter)="saveForm($event)"
+      (moveEmitter)="move($event,i)">
+    </app-question>
   </div>
+
+  <div class="actions">
+    <button class="add-btn" (click)="addQuestion()">+</button>
+    <button class="save-btn" (click)="saveQuestions()">Enregistrer</button>
+  </div>
+
+  <div class="error-message" *ngIf="errorMessage">
+    {{ errorMessage }}
+  </div>
+</div>
