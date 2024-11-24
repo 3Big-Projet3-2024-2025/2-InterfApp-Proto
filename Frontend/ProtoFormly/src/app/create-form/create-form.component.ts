@@ -2,11 +2,12 @@ import { Component, QueryList, ViewChildren } from '@angular/core';
 import { QuestionComponent } from '../question/question.component';
 import { CommonModule } from '@angular/common';
 import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-
+import { HttpClientModule } from '@angular/common/http';
+import { FormService } from '../service/form.service';
 @Component({
   selector: 'app-create-form',
   standalone: true,
-  imports: [QuestionComponent, CommonModule,ReactiveFormsModule,FormsModule],
+  imports: [QuestionComponent, CommonModule,ReactiveFormsModule,FormsModule,HttpClientModule],
   templateUrl: './create-form.component.html',
   styleUrl: './create-form.component.css'
 })
@@ -17,7 +18,7 @@ export class CreateFormComponent {
 
   @ViewChildren(QuestionComponent) questionComponents!: QueryList<QuestionComponent>;
 
-  constructor(private formBuilder: FormBuilder){
+  constructor(private formBuilder: FormBuilder, private formServie: FormService){
     this.formForm = this.formBuilder.group({
       inputTitreForm:['', Validators.required],
       arrayFormQuestion: this.formBuilder.array([]),
@@ -65,8 +66,21 @@ export class CreateFormComponent {
     if(this.formForm.valid)
     {
       this.errorMessage = "";
-
-      // Ajouter une logique d'enregistrement ici 
+      const formData = {
+        title: this.formForm.get('inputTitreForm')?.value,
+        questions: this.formForm.get('arrayFormQuestion')?.value,
+      };
+      // Ajouter une logique d'enregistrement ici
+      this.formServie.saveForm(formData).subscribe({
+        next: (response) => {
+          console.log('Form saved successfully:', response);
+          alert('Formulaire sauvegardé avec succès !');
+        },
+        error: (err) => {
+          console.error('Error saving form:', err);
+          this.errorMessage = 'Erreur lors de la sauvegarde du formulaire.';
+        },
+      });
 
     }else{
       this.errorMessage = "The form is not complete";
