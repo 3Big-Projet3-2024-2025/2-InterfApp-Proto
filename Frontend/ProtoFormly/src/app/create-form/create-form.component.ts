@@ -18,7 +18,7 @@ export class CreateFormComponent {
 
   @ViewChildren(QuestionComponent) questionComponents!: QueryList<QuestionComponent>;
 
-  constructor(private formBuilder: FormBuilder, private formServie: FormService){
+  constructor(private formBuilder: FormBuilder, private formService: FormService){
     this.formForm = this.formBuilder.group({
       inputTitreForm:['', Validators.required],
       arrayFormQuestion: this.formBuilder.array([]),
@@ -63,15 +63,16 @@ export class CreateFormComponent {
   saveQuestions(): void {
     this.requestForms();
     console.log(this.formForm.value);
-    if(this.formForm.valid)
-    {
+  
+    if (this.formForm.valid) {
       this.errorMessage = "";
       const formData = {
         title: this.formForm.get('inputTitreForm')?.value,
         questions: this.formForm.get('arrayFormQuestion')?.value,
       };
-      // Ajouter une logique d'enregistrement ici
-      this.formServie.saveForm(formData).subscribe({
+  
+      // Logique pour sauvegarder le formulaire
+      this.formService.saveForm(formData).subscribe({
         next: (response) => {
           console.log('Form saved successfully:', response);
           alert('Formulaire sauvegardé avec succès !');
@@ -81,10 +82,8 @@ export class CreateFormComponent {
           this.errorMessage = 'Erreur lors de la sauvegarde du formulaire.';
         },
       });
-
-    }else{
+    } else {
       this.errorMessage = "The form is not complete";
     }
-    
   }
 }

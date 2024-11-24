@@ -1,11 +1,11 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, Validators,  ReactiveFormsModule, FormArray, FormControl } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-
+import { HttpClientModule } from '@angular/common/http';
 @Component({
   selector: 'app-question',
   standalone: true,
-  imports: [FormsModule, CommonModule, ReactiveFormsModule],
+  imports: [FormsModule, CommonModule, ReactiveFormsModule,HttpClientModule],
   templateUrl: './question.component.html',
   styleUrl: './question.component.css'
 })
