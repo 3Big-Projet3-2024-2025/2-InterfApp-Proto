@@ -18,5 +18,5 @@ public class Form {
     @Id
     private String id;
     private String title;
-    private List<Map<String, Objects>> questions;
+    private List<Map<String, String>> questions;
 }
