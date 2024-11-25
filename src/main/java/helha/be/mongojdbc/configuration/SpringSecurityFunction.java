@@ -22,7 +22,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SpringSecurityFunction {
 
     @Autowired
-    UserDetailsService userDetailsService;
+    UserDetailsServiceConfig userDetailsService;
 
     @Autowired
     JWTFilter jwtFilter;
