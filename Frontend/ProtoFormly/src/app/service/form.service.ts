@@ -9,7 +9,12 @@ export class FormService {
 
   private baseUrl = 'http://localhost:8080/api/forms'; // URL de base pour l'API backend
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.http.get('http://localhost:8080/api/forms').subscribe({
+      next: (data) => console.log(data),
+      error: (err) => console.error('CORS or Backend issue:', err),
+    });
+  }
 
   // Méthode pour sauvegarder un formulaire (POST)
   saveForm(form: any): Observable<any> {

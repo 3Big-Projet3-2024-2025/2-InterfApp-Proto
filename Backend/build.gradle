@@ -35,3 +35,7 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+bootRun {
+    jvmArgs = ["--add-opens", "java.base/java.util=ALL-UNNAMED"]
+}
