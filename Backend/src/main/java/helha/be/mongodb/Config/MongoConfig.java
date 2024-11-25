@@ -11,7 +11,7 @@ public class MongoConfig extends AbstractMongoClientConfiguration {
 
     @Override
     protected String getDatabaseName() {
-        return "ProtoFroms"; // Nom de la base MongoDB
+        return "ProtoForms"; // Nom de la base MongoDB
     }
 
     @Bean

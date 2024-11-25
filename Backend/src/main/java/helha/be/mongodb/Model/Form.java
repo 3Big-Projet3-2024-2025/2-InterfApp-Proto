@@ -13,7 +13,7 @@ import java.util.Objects;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collation = "Froms")
+@Document(collection = "Forms")
 public class Form {
     @Id
     private String id;

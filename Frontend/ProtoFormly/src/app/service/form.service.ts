@@ -7,10 +7,10 @@ import { Observable } from 'rxjs';
 })
 export class FormService {
 
-  private baseUrl = 'http://localhost:8080/api/forms'; // URL de base pour l'API backend
+  private baseUrl = 'http://localhost:27017/api/forms'; // URL de base pour l'API backend
 
   constructor(private http: HttpClient) {
-    this.http.get('http://localhost:8080/api/forms').subscribe({
+    this.http.get('http://localhost:27017/api/forms').subscribe({
       next: (data) => console.log(data),
       error: (err) => console.error('CORS or Backend issue:', err),
     });
