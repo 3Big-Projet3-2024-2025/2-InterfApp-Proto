@@ -1,8 +1,9 @@
-import { Component, QueryList, ViewChildren } from '@angular/core';
+import { Component, input, QueryList, ViewChildren } from '@angular/core';
 import { QuestionComponent } from '../question/question.component';
 import { CommonModule } from '@angular/common';
 import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { FormlyFieldConfig } from '@ngx-formly/core';
 import { FormService } from '../service/form.service';
 @Component({
   selector: 'app-create-form',
@@ -60,6 +61,47 @@ export class CreateFormComponent {
       [this.questions[id ], this.questions[id + 1]] = [this.questions[id + 1], this.questions[id]];
     }
   }
+
+  transformForGroupToFormlyField(): FormlyFieldConfig[] {
+    const formlyFields: FormlyFieldConfig[] = [];
+  
+    this.formForm.value.arrayFormQuestion.forEach((form: any, index: number) => {
+      let type = '';
+      
+      // Déterminer le type Formly en fonction du type de question
+      switch (form.value.inputTypeQuestion) {
+        case 'Open Answer':
+          type = 'input';
+          break;
+        case 'Multiple Choice':
+          type = 'select';
+          break;
+        case 'Checkbox':
+          type = 'checkbox';
+          break;
+        default:
+          type = 'input'; // Type par défaut
+      }
+  
+      // Créer une configuration FormlyField pour chaque question
+      const field: FormlyFieldConfig = {
+        key: `question_${index}`,
+        type: type,
+        templateOptions: {
+          label: form.value.inputLabel ,
+          placeholder: '',
+          required: form.required || false,
+          options: (form.value.inputChoice || []).map((choice: string) => ({ value:choice , label:choice }) ), // Pour les types "select" ou "radio", etc.
+        },
+      };
+  
+      formlyFields.push(field);
+    });
+  
+    return formlyFields;
+  }
+
+
   saveQuestions(): void {
     this.requestForms();
     console.log(this.formForm.value);
@@ -68,7 +110,7 @@ export class CreateFormComponent {
       this.errorMessage = "";
       const formData = {
         title: this.formForm.get('inputTitreForm')?.value,
-        questions: this.formForm.get('arrayFormQuestion')?.value,
+        questions: this.transformForGroupToFormlyField()
       };
   
       // Logique pour sauvegarder le formulaire
