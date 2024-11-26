@@ -31,6 +31,8 @@ public class SpringSecurityFunction {
     public SecurityFilterChain securityFilterChain(final HttpSecurity http) throws Exception {
         return http.csrf(csrf -> csrf.disable())
                 .authorizeRequests(authorizeRequests -> {
+                    authorizeRequests.requestMatchers("api/mongo/test").hasRole("ADMIN");
+                    authorizeRequests.requestMatchers("api/mongo/testuser").hasRole("USER");
                     authorizeRequests.requestMatchers("/api/mongo/user","/auth/login").permitAll();
                     authorizeRequests.anyRequest().authenticated();
                 }).addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class).build();

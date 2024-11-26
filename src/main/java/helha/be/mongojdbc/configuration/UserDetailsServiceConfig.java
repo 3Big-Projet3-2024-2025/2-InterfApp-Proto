@@ -22,20 +22,20 @@ public class UserDetailsServiceConfig implements UserDetailsService {
     @Autowired
     UserRepository userRepo;
 
-    @Bean
-    public UserDetailsService userDetailsService() {
-        UserDetails user1 = User.builder()
-                .username("user")
-                .password("{noop}user")
-                .roles("USER")
-                .build();
-        UserDetails user2 = User.builder()
-                .username("admin")
-                .password("{noop}admin")
-                .roles("USER", "ADMIN")
-                .build();
-        return new InMemoryUserDetailsManager(user1, user2);
-    }
+//    @Bean
+//    public UserDetailsService userDetailsService() {
+//        UserDetails user1 = User.builder()
+//                .username("user")
+//                .password("{noop}user")
+//                .roles("USER")
+//                .build();
+//        UserDetails user2 = User.builder()
+//                .username("admin")
+//                .password("{noop}admin")
+//                .roles("USER", "ADMIN")
+//                .build();
+//        return new InMemoryUserDetailsManager(user1, user2);
+//    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -51,6 +51,9 @@ public class UserDetailsServiceConfig implements UserDetailsService {
     private List<GrantedAuthority> getAuthorities(String role){
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority("ROLE_"+role.toUpperCase()));
+        if(role.equals("ADMIN")){
+            authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+        }
         return authorities;
     }
 }

@@ -1,5 +1,6 @@
 package helha.be.mongojdbc.security;
 
+import helha.be.mongojdbc.configuration.UserDetailsServiceConfig;
 import helha.be.mongojdbc.utils.JWTUtils;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
@@ -23,7 +24,7 @@ public class JWTFilter extends OncePerRequestFilter {
     private JWTUtils jwtUtils;
 
     @Autowired
-    private UserDetailsService userDetailsService;
+    private UserDetailsServiceConfig userDetailsService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {

@@ -29,4 +29,14 @@ public class UserController {
     public List<Users> getUsers() {
         return userRepo.findAll();
     }
+
+    @GetMapping("/test")
+    public String test() {
+        return "Hello World!";
+    }
+
+    @GetMapping("/testuser")
+    public String testuser() {
+        return "Hello World!";
+    }
 }
