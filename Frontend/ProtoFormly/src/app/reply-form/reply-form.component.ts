@@ -6,11 +6,12 @@ import { ActivatedRoute } from '@angular/router';
 import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
 import { FormlyFieldConfig, FormlyFormOptions, FormlyModule } from '@ngx-formly/core';
 import { FormService } from '../service/form.service';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @Component({
   selector: 'app-reply-form',
   standalone: true,
-  imports: [CommonModule,ReactiveFormsModule,FormsModule,HttpClientModule,FormlyBootstrapModule,FormlyModule],
+  imports: [CommonModule,ReactiveFormsModule,FormsModule,HttpClientModule,FormlyBootstrapModule,FormlyModule,MatNativeDateModule],
   templateUrl: './reply-form.component.html',
   styleUrl: './reply-form.component.css'
 })
