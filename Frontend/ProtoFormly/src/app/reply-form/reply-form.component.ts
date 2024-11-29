@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import {} from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -11,7 +11,11 @@ import { MatNativeDateModule } from '@angular/material/core';
 @Component({
   selector: 'app-reply-form',
   standalone: true,
-  imports: [CommonModule,ReactiveFormsModule,FormsModule,HttpClientModule,FormlyBootstrapModule,FormlyModule,MatNativeDateModule],
+  imports: [CommonModule,ReactiveFormsModule,FormsModule,
+// TODO: `HttpClientModule` should not be imported into a component directly.
+// Please refactor the code to add `provideHttpClient()` call to the provider list in the
+// application bootstrap logic and remove the `HttpClientModule` import from this component.
+HttpClientModule,FormlyBootstrapModule,FormlyModule,MatNativeDateModule],
   templateUrl: './reply-form.component.html',
   styleUrl: './reply-form.component.css'
 })

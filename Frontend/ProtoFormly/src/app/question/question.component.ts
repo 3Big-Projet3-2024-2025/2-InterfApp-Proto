@@ -1,11 +1,15 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, Validators,  ReactiveFormsModule, FormArray, FormControl } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import {} from '@angular/common/http';
 @Component({
   selector: 'app-question',
   standalone: true,
-  imports: [FormsModule, CommonModule, ReactiveFormsModule,HttpClientModule],
+  imports: [FormsModule, CommonModule, ReactiveFormsModule,
+// TODO: `HttpClientModule` should not be imported into a component directly.
+// Please refactor the code to add `provideHttpClient()` call to the provider list in the
+// application bootstrap logic and remove the `HttpClientModule` import from this component.
+HttpClientModule],
   templateUrl: './question.component.html',
   styleUrl: './question.component.css'
 })
