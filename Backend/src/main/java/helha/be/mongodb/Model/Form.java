@@ -18,5 +18,5 @@ public class Form {
     @Id
     private String id;
     private String title;
-    private List<Objects> questions;
+    private List<Question> questions;
 }
