@@ -13,5 +13,5 @@ public class Question {
     private String inputQuestion; // The actual question
     private String inputTypeQuestion; // The type
     private List<String> inputChoices; // For questions with choices
-    private boolean required; // If the question is mandatory
+    private boolean inputRequired; // If the question is mandatory
 }

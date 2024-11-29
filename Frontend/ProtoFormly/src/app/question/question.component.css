@@ -1,86 +1,121 @@
 /* question-form.component.css */
 
 .question-container {
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 16px;
-    background-color: #f9f9f9;
-    width: 400px;
-    margin: 16px auto;
-    position: relative;
-  }
-  
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 16px;
-  }
-  
-  .header h3 {
-    margin: 0;
-    font-size: 18px;
-  }
-  
-  .close-btn {
-    background: none;
-    border: none;
-    font-size: 20px;
-    color: #666;
-    cursor: pointer;
-  }
-  
-  .form-group {
-    margin-bottom: 16px;
-  }
-  
-  label {
-    display: block;
-    font-size: 14px;
-    margin-bottom: 4px;
-  }
-  
-  input[type="text"], select {
-    width: calc(100% - 32px);
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 14px;
-  }
-  
-  .choice-wrapper {
-    display: flex;
-    align-items: center;
-  }
-  
-  .choice-wrapper input {
-    flex: 1;
-  }
-  
-  .delete-btn {
-    background: none;
-    border: none;
-    font-size: 20px;
-    color: #d9534f;
-    cursor: pointer;
-    margin-left: 8px;
-  }
-  
-  .add-choice-btn {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
-  }
-  
-  .add-choice-btn:hover {
-    background-color: #0056b3;
-  }
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 16px;
+  background-color: #f9f9f9;
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  margin: auto;
+}
 
-  .hidden {
-    display: none;
-  }
+.form-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.button-group {
+  display: flex;
+  gap: 8px;
+}
+
+.content {
+  margin-top: 16px;
+}
+
+.hidden {
+  display: none;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.form-group-inline {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.choice-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.add-choice-btn {
+  margin-top: 8px;
+  padding: 4px 8px;
+  border: 1px solid #ccc;
+  background-color: #e6e6e6;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.add-choice-btn:hover {
+  background-color: #dcdcdc;
+}
+
+.move-buttons {
+  position: absolute;
+  top: 50%;
+  right: -50px;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.move-up-btn, .move-down-btn {
+  padding: 4px;
+  border: none;
+  background-color: #e6e6e6;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.move-up-btn:hover, .move-down-btn:hover {
+  background-color: #dcdcdc;
+}
+
+.close-btn {
+  padding: 4px 8px;
+  border: none;
+  background-color: #e6e6e6;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.close-btn:hover {
+  background-color: #dcdcdc;
+}
+
+.toggle-btn {
+  padding: 4px 8px;
+  border: none;
+  background-color: #e6e6e6;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.toggle-btn:hover {
+  background-color: #dcdcdc;
+}
   

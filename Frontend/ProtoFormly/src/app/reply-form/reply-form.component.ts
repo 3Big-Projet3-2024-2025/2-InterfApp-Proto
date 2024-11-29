@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
@@ -23,9 +23,14 @@ export class ReplyFormComponent implements OnInit {
   fields: FormlyFieldConfig[] = [];
 
   readonly mapType : Map<String,String> = new Map([
-    ["Open Answer", "input"],
-    ["Rating", "checkbox"],
-    ["Multiple Choice", "select"],
+    ["Short Answer", "input"],
+    ["Open Answer", "textarea"],
+    ["Checkbox", "checkbox"],
+    ["Multiple choice", "select"],
+    ["Date question", "datepicker"],
+    ["Slider scale question", "slider"],
+    ["Number question", "integer-input"],
+    ["Email", "email"],   
   ]);
 
   constructor(private route: ActivatedRoute, private formService: FormService) {}
@@ -47,21 +52,25 @@ export class ReplyFormComponent implements OnInit {
     }
   }
 
-  transformFormGroupIntoFormlyField() : FormlyFieldConfig[] {
+  transformFormGroupIntoFormlyField(): FormlyFieldConfig[] {
     const formlyFields: FormlyFieldConfig[] = [];
-
-    console.log(this.questions);
   
-    this.questions.forEach((form: any, index: number) => {
-      
-      // Créer une configuration FormlyField pour chaque question
+    this.questions.forEach((question: any , index : number) => {
       const field: FormlyFieldConfig = {
-        key: `question_${index}`,
-        type: this.mapType.get(form.inputTypeQuestion) as string || "input",
+        key: question.inputTitleQuestion || `Question_${index}`,
+        type: this.mapType.get(question.inputTypeQuestion) as string || 'input',
         templateOptions: {
-          label: form.inputQuestion ,
-          required: form.required || false,
-          options: (form.inputChoices || []).map((choice: string) => ({ value:choice , label:choice }) ), // Pour les types "select" ou "radio", etc.
+          label: question.inputQuestion,
+          required: question.inputRequired,
+          multiple: question.inputAnswerMultiple,
+          selectAllOption: 'Select All',
+          options: (question.inputChoices || []).map((choice: string) => ({ value: choice, label: choice })),
+          description: question.inputRequired? "Required" : "Optional", 
+        },
+        validation: {
+          messages: {
+            required: 'This field is required', // Message d'erreur pour les champs obligatoires
+          },
         },
       };
   
@@ -70,10 +79,7 @@ export class ReplyFormComponent implements OnInit {
   
     return formlyFields;
   }
-
-
-
   submit(){
-
+    console.log(this.formReply);
   }
 }

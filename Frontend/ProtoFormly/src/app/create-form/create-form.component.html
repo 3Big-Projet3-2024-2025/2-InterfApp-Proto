@@ -1,18 +1,20 @@
 <div class="createForm-container">
-  <form [formGroup]="formForm" >
+  <form [formGroup]="formForm" class="form-layout">
     <div class="form-header">
       <label for="inputTitreForm">Titre du formulaire :</label>
-      <input id="inputTitreForm" type="text"  formControlName="inputTitreForm" placeholder="Entrez le titre du formulaire">
+      <input id="inputTitreForm" type="text" formControlName="inputTitreForm" placeholder="Entrez le titre du formulaire">
     </div>
-  </form> 
+  </form>
 
-  <div *ngFor="let questionId of questions; let i = index">
-    <app-question
-      [questionId]="i + 1"
-      (remove)="removeQuestion(i)"
-      (formEmitter)="saveForm($event)"
-      (moveEmitter)="move($event,i)">
-    </app-question>
+  <div class="questions-container">
+    <div *ngFor="let questionId of questions; let i = index">
+      <app-question
+        [questionId]="i + 1"
+        (remove)="removeQuestion(i)"
+        (formEmitter)="saveForm($event)"
+        (moveEmitter)="move($event,i)">
+      </app-question>
+    </div>
   </div>
 
   <div class="actions">

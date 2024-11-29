@@ -16,13 +16,15 @@ export class QuestionComponent {
   @Output() moveEmitter = new EventEmitter<boolean>();
   formQuestion: FormGroup;
   isContentHidden : boolean = false;
-  questionTypes: string[] = ['Multiple Choice', 'Open Answer', 'Rating'];
+  questionTypes: string[] = ["Short Answer","Open Answer","Checkbox","Multiple choice","Date question","Slider scale question","Number question","Email"   ];
   choices: string[] = ["",""];
   InputChoicesArray : FormArray = this.formBuilder.array(this.choices.map(choice => this.formBuilder.control(choice)));
   AnswerMultiple : FormControl = new FormControl(false);
 
   constructor(private formBuilder: FormBuilder){
     this.formQuestion = this.formBuilder.group({
+      inputTitleQuestion:[''],
+      inputRequired:[true],
       inputQuestion:['', Validators.required],
       inputTypeQuestion: ['', Validators.required],
     })
@@ -49,11 +51,10 @@ export class QuestionComponent {
   }
 
   onTypeChange(typeQuestion : string):void{
-    if (typeQuestion == "Multiple Choice"){
+    if (typeQuestion == "Multiple choice"){
       this.formQuestion.addControl('inputChoices', this.InputChoicesArray);
       this.formQuestion.addControl('inputAnswerMultiple', this.AnswerMultiple);
-    }
-    if (typeQuestion == "Open Answer" || typeQuestion == "Rating"){
+    }else{
       this.formQuestion.removeControl("inputChoices");
       this.formQuestion.removeControl("inputAnswerMultiple");
     }
