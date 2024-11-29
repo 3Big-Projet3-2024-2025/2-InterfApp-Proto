@@ -9,15 +9,10 @@ import { FormService } from '../service/form.service';
 import { MatNativeDateModule } from '@angular/material/core';
 
 @Component({
-  selector: 'app-reply-form',
-  standalone: true,
-  imports: [CommonModule,ReactiveFormsModule,FormsModule,
-// TODO: `HttpClientModule` should not be imported into a component directly.
-// Please refactor the code to add `provideHttpClient()` call to the provider list in the
-// application bootstrap logic and remove the `HttpClientModule` import from this component.
-HttpClientModule,FormlyBootstrapModule,FormlyModule,MatNativeDateModule],
-  templateUrl: './reply-form.component.html',
-  styleUrl: './reply-form.component.css'
+    selector: 'app-reply-form',
+    imports: [CommonModule, ReactiveFormsModule, FormsModule, FormlyBootstrapModule, FormlyModule, MatNativeDateModule],
+    templateUrl: './reply-form.component.html',
+    styleUrl: './reply-form.component.css'
 })
 export class ReplyFormComponent implements OnInit {
   title! : String;

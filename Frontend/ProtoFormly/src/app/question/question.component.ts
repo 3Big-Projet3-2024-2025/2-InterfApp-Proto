@@ -3,15 +3,14 @@ import { FormBuilder, FormGroup, FormsModule, Validators,  ReactiveFormsModule, 
 import { CommonModule } from '@angular/common';
 import {} from '@angular/common/http';
 @Component({
-  selector: 'app-question',
-  standalone: true,
-  imports: [FormsModule, CommonModule, ReactiveFormsModule,
-// TODO: `HttpClientModule` should not be imported into a component directly.
-// Please refactor the code to add `provideHttpClient()` call to the provider list in the
-// application bootstrap logic and remove the `HttpClientModule` import from this component.
-HttpClientModule],
-  templateUrl: './question.component.html',
-  styleUrl: './question.component.css'
+    selector: 'app-question',
+    imports: [FormsModule, CommonModule, ReactiveFormsModule,
+        // TODO: `HttpClientModule` should not be imported into a component directly.
+        // Please refactor the code to add `provideHttpClient()` call to the provider list in the
+        // application bootstrap logic and remove the `HttpClientModule` import from this component.
+        HttpClientModule],
+    templateUrl: './question.component.html',
+    styleUrl: './question.component.css'
 })
 export class QuestionComponent {
   @Input() questionId!: number; // Reçoit un identifiant de question depuis le parent
