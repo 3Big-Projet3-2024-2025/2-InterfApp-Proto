@@ -2,10 +2,10 @@ import { Component, input, QueryList, ViewChildren } from '@angular/core';
 import { QuestionComponent } from '../question/question.component';
 import { CommonModule } from '@angular/common';
 import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { provideHttpClient } from '@angular/common/http';
 import { FormService } from '../service/form.service';
 @Component({
   selector: 'app-create-form',
+  standalone:true,
   imports: [QuestionComponent, CommonModule,ReactiveFormsModule,FormsModule],
   templateUrl: './create-form.component.html',
   styleUrl: './create-form.component.css'

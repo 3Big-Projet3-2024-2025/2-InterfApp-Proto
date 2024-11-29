@@ -1,14 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, Validators,  ReactiveFormsModule, FormArray, FormControl } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import {} from '@angular/common/http';
 @Component({
     selector: 'app-question',
-    imports: [FormsModule, CommonModule, ReactiveFormsModule,
-        // TODO: `HttpClientModule` should not be imported into a component directly.
-        // Please refactor the code to add `provideHttpClient()` call to the provider list in the
-        // application bootstrap logic and remove the `HttpClientModule` import from this component.
-        HttpClientModule],
+    standalone: true,
+    imports: [FormsModule, CommonModule, ReactiveFormsModule],
     templateUrl: './question.component.html',
     styleUrl: './question.component.css'
 })
@@ -19,7 +15,7 @@ export class QuestionComponent {
   @Output() moveEmitter = new EventEmitter<boolean>();
   formQuestion: FormGroup;
   isContentHidden : boolean = false;
-  questionTypes: string[] = ["Short Answer","Open Answer","Checkbox","Multiple choice","Date question","Slider scale question","Number question","Email"   ];
+  questionTypes: string[] = ["Short Answer","Open Answer","Checkbox","Multiple choice" ];
   choices: string[] = ["",""];
   InputChoicesArray : FormArray = this.formBuilder.array(this.choices.map(choice => this.formBuilder.control(choice)));
   AnswerMultiple : FormControl = new FormControl(false);

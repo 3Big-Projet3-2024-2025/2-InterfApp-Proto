@@ -1,16 +1,15 @@
 import { CommonModule } from '@angular/common';
-import {} from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
+import { FormlyMaterialModule } from '@ngx-formly/material';
 import { FormlyFieldConfig, FormlyFormOptions, FormlyModule } from '@ngx-formly/core';
 import { FormService } from '../service/form.service';
-import { MatNativeDateModule } from '@angular/material/core';
 
 @Component({
     selector: 'app-reply-form',
-    imports: [CommonModule, ReactiveFormsModule, FormsModule, FormlyBootstrapModule, FormlyModule, MatNativeDateModule],
+    standalone : true,
+    imports: [CommonModule, ReactiveFormsModule, FormsModule, FormlyMaterialModule, FormlyModule,],
     templateUrl: './reply-form.component.html',
     styleUrl: './reply-form.component.css'
 })
@@ -27,13 +26,9 @@ export class ReplyFormComponent implements OnInit {
     ["Open Answer", "textarea"],
     ["Checkbox", "checkbox"],
     ["Multiple choice", "select"],
-    ["Date question", "datepicker"],
-    ["Slider scale question", "slider"],
-    ["Number question", "integer-input"],
-    ["Email", "email"],   
   ]);
 
-  constructor(private route: ActivatedRoute, private formService: FormService) {}
+  constructor( private route: ActivatedRoute, private formService: FormService) {}
 
   ngOnInit(){
     const formId = this.route.snapshot.paramMap.get('id');

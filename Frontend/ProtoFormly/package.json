@@ -25,6 +25,7 @@
     "@angular/ssr": "^19.0.2",
     "@ngx-formly/bootstrap": "^6.3.11",
     "@ngx-formly/core": "^6.3.11",
+    "@ngx-formly/material": "^6.3.11",
     "bootstrap": "^5.3.3",
     "express": "^4.18.2",
     "rxjs": "~7.8.0",

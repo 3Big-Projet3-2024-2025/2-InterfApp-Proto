@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-open-form',
+    standalone:true,
     imports: [CommonModule],
     templateUrl: './open-form.component.html',
     styleUrl: './open-form.component.css'
