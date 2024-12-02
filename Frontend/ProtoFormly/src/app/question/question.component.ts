@@ -15,7 +15,7 @@ export class QuestionComponent {
   @Output() moveEmitter = new EventEmitter<boolean>();
   formQuestion: FormGroup;
   isContentHidden : boolean = false;
-  questionTypes: string[] = ["Short Answer","Open Answer","Checkbox","Multiple choice" ];
+  questionTypes: string[] = ["Short Answer","Open Answer","Checkbox","Multiple choice", "Date question","Date and time question" , "datetime" ,"Email question" ,"Ask for a file " ,"Ask for a image" ,"Number question" ,"Range question" ,"Month question" , "Time question" , "Ask for a phone number" ,"Ask for a url","Week question"  ];
   choices: string[] = ["",""];
   InputChoicesArray : FormArray = this.formBuilder.array(this.choices.map(choice => this.formBuilder.control(choice)));
   AnswerMultiple : FormControl = new FormControl(false);

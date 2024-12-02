@@ -2,14 +2,14 @@ import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { FormlyMaterialModule } from '@ngx-formly/material';
+import { FormlyBootstrapModule } from '@ngx-formly/bootstrap'; 
 import { FormlyFieldConfig, FormlyFormOptions, FormlyModule } from '@ngx-formly/core';
 import { FormService } from '../service/form.service';
 
 @Component({
     selector: 'app-reply-form',
     standalone : true,
-    imports: [CommonModule, ReactiveFormsModule, FormsModule, FormlyMaterialModule, FormlyModule,],
+    imports: [CommonModule, ReactiveFormsModule, FormsModule, FormlyBootstrapModule, FormlyModule,],
     templateUrl: './reply-form.component.html',
     styleUrl: './reply-form.component.css'
 })
@@ -26,6 +26,18 @@ export class ReplyFormComponent implements OnInit {
     ["Open Answer", "textarea"],
     ["Checkbox", "checkbox"],
     ["Multiple choice", "select"],
+    ["Date question" , "date"],
+    ["Date and time question" , "datetime"],
+    ["Email question" , "email"],
+    ["Ask for a file " , "file"],
+    ["Ask for a image" , "image"],
+    ["Number question" , "number"],
+    ["Range question" , "range"],
+    ["Month question" , "month"],
+    ["Time question" , "time"],
+    ["Ask for a phone number" , "tel"],
+    ["Ask for a url" , "url"],
+    ["Week question" , "week"],
   ]);
 
   constructor( private route: ActivatedRoute, private formService: FormService) {}
