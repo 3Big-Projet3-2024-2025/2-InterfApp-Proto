@@ -29,15 +29,13 @@ export class ReplyFormComponent implements OnInit {
     ["Date question" , "date"],
     ["Date and time question" , "datetime"],
     ["Email question" , "email"],
-    ["Ask for a file " , "file"],
-    ["Ask for a image" , "image"],
     ["Number question" , "number"],
     ["Range question" , "range"],
     ["Month question" , "month"],
     ["Time question" , "time"],
     ["Ask for a phone number" , "tel"],
-    ["Ask for a url" , "url"],
     ["Week question" , "week"],
+    ["Color question" , "color"],
   ]);
 
   constructor( private route: ActivatedRoute, private formService: FormService) {}
@@ -72,7 +70,6 @@ export class ReplyFormComponent implements OnInit {
           multiple: question.inputAnswerMultiple,
           selectAllOption: 'Select All',
           options: (question.inputChoices || []).map((choice: string) => ({ value: choice, label: choice })),
-          description: question.inputRequired? "Required" : "Optional", 
         },
         validation: {
           messages: {
