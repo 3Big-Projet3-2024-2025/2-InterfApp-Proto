@@ -18,5 +18,5 @@ public class Reponse {
     private String id_reponse;
     private String id_Form;
     private String id_User;
-    private Map<String,String> reponse;
+    private Map<String,Object> reponse;
 }

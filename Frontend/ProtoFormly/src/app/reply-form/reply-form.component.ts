@@ -61,6 +61,8 @@ export class ReplyFormComponent implements OnInit {
 
   transformFormGroupIntoFormlyField(): FormlyFieldConfig[] {
     const formlyFields: FormlyFieldConfig[] = [];
+
+    console.log(this.questions);
   
     this.questions.forEach((question: any , index : number) => {
       const field: FormlyFieldConfig = {
