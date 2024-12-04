@@ -1,6 +1,7 @@
 package helha.be.mongojdbc.configuration;
 
-import helha.be.mongojdbc.security.JWTFilter;
+//import helha.be.mongojdbc.security.JWTFilter;
+import helha.be.mongojdbc.security.KeycloakRoleConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,6 +14,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -23,9 +27,9 @@ public class SpringSecurityFunction {
 
     @Autowired
     UserDetailsServiceConfig userDetailsService;
-
-    @Autowired
-    JWTFilter jwtFilter;
+//
+//    @Autowired
+//    JWTFilter jwtFilter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(final HttpSecurity http) throws Exception {
@@ -35,7 +39,9 @@ public class SpringSecurityFunction {
                     authorizeRequests.requestMatchers("api/mongo/testuser").hasRole("USER");
                     authorizeRequests.requestMatchers("/api/mongo/user","/auth/login").permitAll();
                     authorizeRequests.anyRequest().authenticated();
-                }).addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class).build();
+                }).oauth2ResourceServer(oauth2 ->
+                        oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter()))
+                ).build();
     }
 
 //    @Bean
@@ -53,14 +59,13 @@ public class SpringSecurityFunction {
 //    }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+    public JwtDecoder jwtDecoder() {
+        return NimbusJwtDecoder.withJwkSetUri("http://localhost:8081/realms/helha/protocol/openid-connect/certs").build();
     }
 
-    @Bean
-    public AuthenticationManager authenticationManager(HttpSecurity http, PasswordEncoder passwordEncoder) throws Exception {
-        AuthenticationManagerBuilder authenticationManagerBuiler = http.getSharedObject(AuthenticationManagerBuilder.class);
-        authenticationManagerBuiler.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
-        return authenticationManagerBuiler.build();
+    private JwtAuthenticationConverter jwtAuthenticationConverter() {
+        JwtAuthenticationConverter converter = new JwtAuthenticationConverter();
+        converter.setJwtGrantedAuthoritiesConverter(new KeycloakRoleConverter());
+        return converter;
     }
 }

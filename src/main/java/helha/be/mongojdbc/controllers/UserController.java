@@ -14,16 +14,16 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepo;
+//
+//    @Autowired
+//    private PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @PostMapping("/user")
-    public Users addUser(@RequestBody Users users) {
-        users.setPassword(passwordEncoder.encode(users.getPassword()));
-        this.userRepo.save(users);
-        return users;
-    }
+//    @PostMapping("/user")
+//    public Users addUser(@RequestBody Users users) {
+//        users.setPassword(passwordEncoder.encode(users.getPassword()));
+//        this.userRepo.save(users);
+//        return users;
+//    }
 
     @GetMapping("/user")
     public List<Users> getUsers() {
