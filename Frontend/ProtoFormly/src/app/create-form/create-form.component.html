@@ -1,28 +1,42 @@
-<div class="createForm-container">
-  <form [formGroup]="formForm" class="form-layout">
-    <div class="form-header">
-      <label for="inputTitreForm">Titre du formulaire :</label>
-      <input id="inputTitreForm" type="text" formControlName="inputTitreForm" placeholder="Entrez le titre du formulaire">
+<div class="container mt-4 p-4 border rounded bg-light shadow-sm">
+  <form [formGroup]="formForm">
+    <div class="mb-3">
+      <label for="inputTitreForm" class="form-label">Titre du formulaire :</label>
+      <input 
+        id="inputTitreForm" 
+        type="text" 
+        formControlName="inputTitreForm" 
+        class="form-control" 
+        placeholder="Entrez le titre du formulaire">
     </div>
   </form>
 
-  <div class="questions-container">
-    <div *ngFor="let questionId of questions; let i = index">
-      <app-question
-        [questionId]="i + 1"
-        (remove)="removeQuestion(i)"
-        (formEmitter)="saveForm($event)"
-        (moveEmitter)="move($event,i)">
-      </app-question>
+    <div *ngFor="let questionId of questions; let i = index" class="card mb-3">
+      <div class="card-body">
+        <app-question
+          [questionId]="i + 1"
+          (remove)="removeQuestion(i)"
+          (formEmitter)="saveForm($event)"
+          (moveEmitter)="move($event,i)">
+        </app-question>
+      </div>
     </div>
-  </div>
 
-  <div class="actions">
-    <button class="add-btn" (click)="addQuestion()">+</button>
-    <button class="save-btn" (click)="saveQuestions()">Enregistrer</button>
+  <div class="d-flex justify-content-between">
+    <button 
+      class="btn btn-success" 
+      (click)="addQuestion()">
+      +
+    </button>
+    <button 
+      class="btn btn-primary" 
+      (click)="saveQuestions()" 
+      [disabled]="!formForm.valid">
+      Enregistrer
+    </button>
   </div>
-
-  <div class="error-message" *ngIf="errorMessage">
+  
+  <div *ngIf="errorMessage" class="mt-3 text-danger fw-bold">
     {{ errorMessage }}
   </div>
 </div>

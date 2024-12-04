@@ -12,7 +12,7 @@ import java.util.Map;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "Question")
+@Document(collection = "Reponse")
 public class Reponse {
     @Id
     private String id_reponse;

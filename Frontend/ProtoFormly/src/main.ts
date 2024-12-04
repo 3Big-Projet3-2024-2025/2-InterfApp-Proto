@@ -23,10 +23,10 @@ bootstrapApplication(AppComponent, {
                 defaultOptions: { templateOptions: { type: 'date' } }
               },
               {
-                name: 'datetime',
+                name: 'datetime-local',
                 component: FormlyGenericTypeModuleComponent,
                 wrappers: ['form-field'], 
-                defaultOptions: { templateOptions: { type: 'datetime' } }
+                defaultOptions: { templateOptions: { type: 'datetime-local' } }
               },
               {
                 name: 'email',

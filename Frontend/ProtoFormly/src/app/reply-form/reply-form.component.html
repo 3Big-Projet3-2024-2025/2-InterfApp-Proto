@@ -16,7 +16,7 @@
       </formly-form>
   
       <div class="text-center mt-3">
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!formReply.valid">Submit</button>
       </div>
     </form>
   </div>

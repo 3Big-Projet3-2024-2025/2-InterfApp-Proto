@@ -4,6 +4,7 @@ import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { FormlyBootstrapModule } from '@ngx-formly/bootstrap'; 
 import { FormlyFieldConfig, FormlyFormOptions, FormlyModule } from '@ngx-formly/core';
+import { AnswerService } from '../service/answer.service';
 import { FormService } from '../service/form.service';
 
 @Component({
@@ -14,6 +15,7 @@ import { FormService } from '../service/form.service';
     styleUrl: './reply-form.component.css'
 })
 export class ReplyFormComponent implements OnInit {
+  idForm! : number;
   title! : String;
   questions! : FormGroup[];
   formReply = new FormGroup({});
@@ -27,7 +29,7 @@ export class ReplyFormComponent implements OnInit {
     ["Checkbox", "checkbox"],
     ["Multiple choice", "select"],
     ["Date question" , "date"],
-    ["Date and time question" , "datetime"],
+    ["Date and time question" , "datetime-local"],
     ["Email question" , "email"],
     ["Number question" , "number"],
     ["Range question" , "range"],
@@ -38,14 +40,14 @@ export class ReplyFormComponent implements OnInit {
     ["Color question" , "color"],
   ]);
 
-  constructor( private route: ActivatedRoute, private formService: FormService) {}
+  constructor( private route: ActivatedRoute, private answerService: AnswerService, private formService: FormService) {}
 
   ngOnInit(){
     const formId = this.route.snapshot.paramMap.get('id');
     if (formId) {
       this.formService.getFormById(formId).subscribe(
         (data) => {
-          console.log(data);
+          this.idForm = data.id;
           this.title = data.title;
           this.questions = data.questions;
           this.fields = this.transformFormGroupIntoFormlyField();
@@ -84,6 +86,25 @@ export class ReplyFormComponent implements OnInit {
     return formlyFields;
   }
   submit(){
-    console.log(this.formReply);
+    console.log(this.formReply.value);
+  
+    if (this.formReply.valid) {
+      const Data = {
+        id_Form: this.idForm, 
+        id_User: "gestion user TO DO",
+        reponse: this.formReply.value
+      };
+  
+      // Logique pour sauvegarder le formulaire
+      this.answerService.saveAnswer(Data).subscribe({
+        next: (response) => {
+          console.log('Form saved successfully:', response);
+          alert('Réponses sauvegardé avec succès !');
+        },
+        error: (err) => {
+          console.error('Error saving form:', err);
+        },
+      });
+    } 
   }
 }

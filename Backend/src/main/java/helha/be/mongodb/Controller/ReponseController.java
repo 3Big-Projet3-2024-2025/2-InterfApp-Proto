@@ -11,6 +11,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/reponses")
+@CrossOrigin(origins = "*") // Permettre Angular d'accéder aux endpoints
 public class ReponseController {
 
     @Autowired
