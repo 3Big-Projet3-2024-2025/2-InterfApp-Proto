@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/users")
 @CrossOrigin(origins = "*")
 public class UserController {
     @Autowired
@@ -21,7 +21,7 @@ public class UserController {
         return userService.saveUser(user);
     }
 
-    @PostMapping("/api/login")
+    @PostMapping("/login")
     public String loginUser(@RequestParam String email, @RequestParam String password) {
         return userService.login(email, password);
     }

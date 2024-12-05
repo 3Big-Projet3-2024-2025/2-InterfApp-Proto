@@ -7,6 +7,7 @@ import helha.be.mongodb.Model.User;
 import helha.be.mongodb.Repository.UserRepository;
 import helha.be.mongodb.security.JwtUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,6 +17,7 @@ public class UserService {
     private UserRepository userRepository;
 
     public User saveUser(User user) {
+        user.setRoles("User");
         return userRepository.save(user);
     }
 

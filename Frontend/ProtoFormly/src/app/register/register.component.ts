@@ -32,7 +32,7 @@ export class RegisterComponent {
         email: this.formRegister.value.inputemail,
         password: this.formRegister.value.inputPassword,
       };
-
+      
       this.registerService.register(userData).subscribe(
         (response) => {
           //rediriger l'utilisateur ou afficher un message de succès
