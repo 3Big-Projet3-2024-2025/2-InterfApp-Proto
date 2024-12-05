@@ -3,16 +3,19 @@ package helha.be.mongodb.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import helha.be.mongodb.Model.LoginRequest;
 import helha.be.mongodb.Model.User;
 import helha.be.mongodb.Service.UserService;
 
 import java.util.List;
 import java.util.Optional;
 
+
 @RestController
 @RequestMapping("/api/users")
 @CrossOrigin(origins = "*")
 public class UserController {
+
     @Autowired
     private UserService userService;
 
@@ -22,8 +25,8 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String loginUser(@RequestParam String email, @RequestParam String password) {
-        return userService.login(email, password);
+    public String loginUser(@RequestBody LoginRequest loginRequest) {
+        return userService.login(loginRequest.getEmail(), loginRequest.getPassword());
     }
 
     @GetMapping
