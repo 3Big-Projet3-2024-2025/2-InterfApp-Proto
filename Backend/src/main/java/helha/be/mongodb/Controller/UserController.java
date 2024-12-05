@@ -21,7 +21,7 @@ public class UserController {
         return userService.saveUser(user);
     }
 
-    @PostMapping("/login")
+    @PostMapping("/api/login")
     public String loginUser(@RequestParam String email, @RequestParam String password) {
         return userService.login(email, password);
     }
