@@ -31,6 +31,7 @@ export class RegisterComponent {
         username: this.formRegister.value.inputUsername,
         email: this.formRegister.value.inputemail,
         password: this.formRegister.value.inputPassword,
+        roles:"",
       };
       
       this.registerService.register(userData).subscribe(

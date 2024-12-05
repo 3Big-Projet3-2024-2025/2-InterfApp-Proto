@@ -20,20 +20,13 @@ export class UserService {
   }
 
   register(userData: any): Observable<any> {
-    const formData = new FormData();
-
-    formData.append('username', userData.username);
-    formData.append('email', userData.email);
-    formData.append('password', userData.password);
-    return this.http.post(this.apiUrl, formData);
+    
+    return this.http.post(this.apiUrl, userData);
   }
 
   login(userData: any): Observable<any> {
-    const formData = new FormData();
-
-    formData.append('email', userData.email);
-    formData.append('password', userData.password);
-    return this.http.post(this.apiUrl, formData);
+   
+    return this.http.post(this.apiUrl+"/login", userData);
   }
 }
 

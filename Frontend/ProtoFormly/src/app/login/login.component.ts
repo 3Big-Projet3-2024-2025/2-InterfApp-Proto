@@ -30,7 +30,7 @@ export class LoginComponent {
         password: this.formLogin.value.inputPassword,
       };
 
-      this.loginService.register(userData).subscribe(
+      this.loginService.login(userData).subscribe(
         (response) => {
           // Vous pouvez rediriger l'utilisateur ou afficher un message de succès
           console.log('Utilisateur est connecté avec succès!', response);
