@@ -26,7 +26,7 @@ export class FormlyMapTypeComponent extends FieldType implements OnInit{
 
       this.map = L.map('map').setView([50.41136, 4.44448], 10); // centrée sur charleroi
 
-      L.tileLayer('https://{s}.tile.openstreetmap.org/%7Bz%7D/%7Bx%7D/%7By%7D.png', {
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
         attribution: '&copy; OpenStreetMap contributors'
       }).addTo(this.map);
@@ -38,6 +38,7 @@ export class FormlyMapTypeComponent extends FieldType implements OnInit{
         }
         const { lat, lng } = event.latlng; // Extraire latitude et longitude
         this.selectedCoords = { lat, lng }; // Stocker les coordonnées sélectionnées
+        this.control.setValue(this.selectedCoords);
 
         if (this.map) { // Vérifier que la carte est initialisée
           this.marqueur = L.marker([lat, lng])
@@ -46,16 +47,6 @@ export class FormlyMapTypeComponent extends FieldType implements OnInit{
             .openPopup();
         }
       });
-    }
-  }
-
-  // Fonction pour soumettre les coordonnées sélectionnées
-  submitCoords(): void {
-    if (this.selectedCoords) {
-      console.log('Coordonnées soumises :', this.selectedCoords);
-      alert(`Coordonnées soumises : Latitude ${this.selectedCoords.lat}, Longitude ${this.selectedCoords.lng}`);
-    } else {
-      alert('Aucune coordonnée sélectionnée.');
     }
   }
 }

@@ -38,6 +38,7 @@ export class ReplyFormComponent implements OnInit {
     ["Ask for a phone number" , "tel"],
     ["Week question" , "week"],
     ["Color question" , "color"],
+    ["Ask coordonates" , "map"],
   ]);
 
   constructor( private route: ActivatedRoute, private answerService: AnswerService, private formService: FormService) {}
