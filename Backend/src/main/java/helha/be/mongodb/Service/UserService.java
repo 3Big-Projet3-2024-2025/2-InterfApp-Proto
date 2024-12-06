@@ -29,6 +29,7 @@ public class UserService {
 
         if(!user.getPassword().equals(loginRequest.getPassword())){return null;}
 
+        loginRequest.setPassword("");
         loginRequest.setToken(JwtUtil.generateToken(loginRequest.getEmail(), user.getPassword(), user.getRoles()));
         
         return loginRequest; 
