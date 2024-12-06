@@ -15,7 +15,7 @@ export class RoleGuard implements CanActivate {
       return true;
     } else {
       console.warn('Access denied - User does not have required role');
-      this.router.navigate(['/unauthorized']);
+      this.router.navigate(['/login']);
       return false;
     }
   }

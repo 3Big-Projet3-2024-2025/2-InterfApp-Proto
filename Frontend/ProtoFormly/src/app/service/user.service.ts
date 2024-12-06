@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { jwtDecode, JwtPayload } from 'jwt-decode';
-import { error } from 'console';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,12 +10,20 @@ import { error } from 'console';
 export class UserService {
 
   private apiUrl = 'http://localhost:8080/api/users'; 
-  private tokenJWT : any = "";
 
-  constructor(private http: HttpClient) { }
+
+  constructor(private http: HttpClient,private cookieService : CookieService) { }
+
+  get tokenJWT() : any{
+    return jwtDecode(this.cookieService.get('jwt'));
+  }
 
   isAuthenticated() :boolean{
-    return this.tokenJWT
+    if(this.tokenJWT != ""){
+      return true;
+    }else{
+      return false;
+    }
   }
 
   hasRole( role: string): boolean {
@@ -36,7 +44,8 @@ export class UserService {
   }
 
   saveJwt(jwt: string){
-    this.tokenJWT = jwtDecode(jwt);
+    this.cookieService.set('jwt', jwt, 1, '/');
+    console.log(this.tokenJWT);
   }
 
 

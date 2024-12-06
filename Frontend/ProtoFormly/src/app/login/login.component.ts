@@ -32,7 +32,7 @@ export class LoginComponent {
 
       this.loginService.login(userData).subscribe(
         (response) => {
-          //this.loginService.saveJwt(response);
+          this.loginService.saveJwt(response.token);
           // Vous pouvez rediriger l'utilisateur ou afficher un message de succès
           console.log('Utilisateur est connecté avec succès!', response);
         },
