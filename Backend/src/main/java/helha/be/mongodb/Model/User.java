@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -16,7 +18,8 @@ public class User {
     @Id
     private String id;
     private String email;
-    private String username; 
+    private String username;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY) 
     private String password;
     private String roles;
 }

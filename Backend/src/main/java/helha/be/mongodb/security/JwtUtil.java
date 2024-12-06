@@ -1,63 +1,74 @@
 package helha.be.mongodb.security;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.security.Jwks;
-import io.jsonwebtoken.security.RsaPrivateJwk;
-import io.jsonwebtoken.security.RsaPublicJwk;
+import io.jsonwebtoken.security.Keys;
 
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
+import helha.be.mongodb.Controller.UserController;
+import helha.be.mongodb.Model.User;
+
 import java.nio.charset.StandardCharsets;
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.interfaces.RSAPrivateKey;
-import java.security.interfaces.RSAPublicKey;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
+import javax.crypto.SecretKey;
 
 
 @Component
 public class JwtUtil {
-
-    private final static KeyPair pair = Jwts.SIG.RS256.keyPair().build();
-    private final static RSAPublicKey pubKey = (RSAPublicKey) pair.getPublic();
-    private final static RSAPrivateKey privateKey = (RSAPrivateKey) pair.getPrivate();
-
-    RsaPrivateJwk privateJwk = Jwks.builder().key(privateKey).idFromThumbprint().build();
-    RsaPublicJwk pubJwk = privateJwk.toPublicJwk();
+    private final static String key = "mklsqfmlkqsjdfoziuhbrfzeamzekpoiwxnbjlxdwf";
+    private final static SecretKey secretKey = Keys.hmacShaKeyFor(key.getBytes(StandardCharsets.UTF_8));
     
-    public static String generateToken(String email, String userId, String roles) {
-        long expirationTimeMillis = 3600000L; // 1 hour in milliseconds
-        Date now = new Date();
-        Date expiration = new Date(now.getTime() + expirationTimeMillis);
+    private UserController userController;
 
+    public JwtUtil(UserController userController) {
+        this.userController = userController;
+    }
+
+    public static String generateToken(User user) {
         return Jwts.builder()
-                .subject(userId)
-                .issuedAt(now)
-                .expiration(expiration)
+                .subject(user.getId())
+                .issuedAt(new Date())
+                .expiration(new Date(new Date().getTime()+3600000))
                 .claims(Map.of(
-                        "email", email,
-                        "roles", roles
+                        "email", user.getEmail(),
+                        "roles", user.getRoles()
                 ))
-                .signWith(privateKey)
+                .signWith(secretKey)
                 .compact();
     }
 
-    // public static Claims verifyToken(String token) {
-    //     try {
-    //         // Parse the JWT using the public key to verify the signature
-    //         return Jwts.parser()
-    //                 .verifyWith(pubKey)
-    //                 .build()
-    //                 .parseSignedClaims(token)
-                    
-    //     } catch (SignatureException e) {
-    //         throw new RuntimeException("Invalid JWT signature", e);
-    //     } catch (Exception e) {
-    //         throw new RuntimeException("Invalid JWT", e);
-    //     }
-    // }
+    public Authentication validateJWT(String JWT){
+        JwtParser jwtParser = Jwts.parser().verifyWith(secretKey).build();
 
+        Claims claims = jwtParser.parseSignedClaims(JWT).getPayload();
+        String email = (String)claims.get("email");
+        String roles = (String)claims.get("roles");
+
+        if (Objects.nonNull(email)){
+            List<SimpleGrantedAuthority> authorities = List.of(roles.split(","))
+                        .stream()
+                        .map(SimpleGrantedAuthority::new)
+                        .collect(Collectors.toList());
+               
+            User user = userController.getUserByEmail(email)
+            .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
+
+            return new UsernamePasswordAuthenticationToken(email, user.getPassword(), authorities);
+        
+                
+        }
+
+        return null;
+    }
 }
