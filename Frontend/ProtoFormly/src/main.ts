@@ -6,6 +6,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { FormlyModule } from '@ngx-formly/core';
 import { importProvidersFrom } from '@angular/core';
 import { FormlyGenericTypeModuleComponent } from './app/formly-generic-type-module/formly-generic-type-module.component';
+import { FormlyMapTypeComponent } from './app/formly-map-type/formly-map-type.component';
 
 
 bootstrapApplication(AppComponent, {
@@ -75,6 +76,12 @@ bootstrapApplication(AppComponent, {
                 component: FormlyGenericTypeModuleComponent,
                 wrappers: ['form-field'], 
                 defaultOptions: { templateOptions: { type: 'color' } }
+              },
+              {
+                name: 'map',
+                component: FormlyMapTypeComponent,
+                wrappers: ['form-field'], 
+                defaultOptions: { templateOptions: { type: 'hidden' } }
               },   
             ],
           })
