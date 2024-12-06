@@ -3,11 +3,11 @@ package helha.be.mongodb.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import helha.be.mongodb.Model.LoginRequest;
 import helha.be.mongodb.Model.User;
 import helha.be.mongodb.Repository.UserRepository;
 import helha.be.mongodb.security.JwtUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,15 +21,17 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public String login(String email, String password){
-        Optional<User> userOptional = userRepository.findByEmail(email);
+    public LoginRequest login(LoginRequest loginRequest){
+        Optional<User> userOptional = userRepository.findByEmail(loginRequest.getEmail());
         if (!userOptional.isPresent()){return null;}
 
         User user = userOptional.get();
 
-        if(!user.getPassword().equals(password)){return null;}
+        if(!user.getPassword().equals(loginRequest.getPassword())){return null;}
 
-        return JwtUtil.generateToken(email, user.getPassword(), user.getRoles());
+        loginRequest.setToken(JwtUtil.generateToken(loginRequest.getEmail(), user.getPassword(), user.getRoles()));
+        
+        return loginRequest; 
     }
 
     public List<User> getAllUsers() {
