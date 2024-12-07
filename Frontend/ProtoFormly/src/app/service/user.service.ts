@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { jwtDecode, JwtPayload } from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
@@ -12,14 +12,15 @@ export class UserService {
   private apiUrl = 'http://localhost:8080/api/users'; 
 
 
-  constructor(private http: HttpClient,private cookieService : CookieService) { }
+  constructor(private http: HttpClient, @Inject(CookieService) private cookieService : CookieService) { }
 
   get tokenJWT() : any{
-    return jwtDecode(this.cookieService.get('jwt'));
+    return jwtDecode(this.cookieService.get('jwt',));
   }
 
   isAuthenticated() :boolean{
     if(this.tokenJWT != ""){
+      console.log(this.tokenJWT);
       return true;
     }else{
       return false;

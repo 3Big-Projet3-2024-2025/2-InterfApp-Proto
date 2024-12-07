@@ -23,6 +23,21 @@ export class LoginComponent {
     });
   }
 
+  async sha512Hash(data: string): Promise<string> {
+    // Convert the input string to an ArrayBuffer
+    const encoder = new TextEncoder();
+    const dataBuffer = encoder.encode(data);
+
+    // Perform the SHA-512 hashing operation
+    const hashBuffer = await crypto.subtle.digest('SHA-512', dataBuffer);
+
+    // Convert the hash ArrayBuffer to a Base64 string
+    const hashArray = new Uint8Array(hashBuffer);
+    const hashBase64 = btoa(String.fromCharCode(...hashArray));
+
+    return hashBase64;
+  }
+
   onSubmit(): void {
     if (this.formLogin.valid) {
       const userData = {
@@ -30,17 +45,20 @@ export class LoginComponent {
         password: this.formLogin.value.inputPassword,
       };
 
-      this.loginService.login(userData).subscribe(
-        (response) => {
-          this.loginService.saveJwt(response.token);
-          // Vous pouvez rediriger l'utilisateur ou afficher un message de succès
-          console.log('Utilisateur est connecté avec succès!', response);
-        },
-        (error) => {
-          this.errorMessage = 'Une erreur est survenue, veuillez réessayer.';
-          console.error(error);
-        }
-      );
+      this.sha512Hash(this.formLogin.value.inputPassword).then((hdata) => {
+        userData.password = hdata
+        this.loginService.login(userData).subscribe(
+          (response) => {
+            this.loginService.saveJwt(response.token);
+            // Vous pouvez rediriger l'utilisateur ou afficher un message de succès
+            console.log('Utilisateur est connecté avec succès!', response);
+          },
+          (error) => {
+            this.errorMessage = 'Une erreur est survenue, veuillez réessayer.';
+            console.error(error);
+          }
+        );
+      });  
     } else {
       this.errorMessage = 'Veuillez vérifier vos informations.';
     }

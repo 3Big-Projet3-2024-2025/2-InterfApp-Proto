@@ -27,10 +27,7 @@ import helha.be.mongodb.security.JWTFilter;
 
 @Configuration
 @EnableWebSecurity
-public class SpringSecurityConfig<UserService> {
-
-    @Autowired
-    UserService userDetailsService;
+public class SpringSecurityConfig {
 
     @Autowired
     JWTFilter jwtFilter;
