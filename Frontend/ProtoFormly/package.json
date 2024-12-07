@@ -28,7 +28,7 @@
     "@ngx-formly/material": "^6.3.11",
     "bootstrap": "^5.3.3",
     "express": "^4.18.2",
-    "jwt-decode": "^4.1.0",
+    "jwt-decode": "^4.0.0",
     "keycloak-js": "^26.0.7",
     "leaflet": "^1.9.4",
     "ngx-cookie-service": "^19.0.0",
